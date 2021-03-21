@@ -1,0 +1,33 @@
+version: "3"
+services:
+  mysql:
+    container_name: docker-template-mysql
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: docker_template
+      MYSQL_ROOT_PASSWORD: mysql
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    volumes:
+      # MySQLの設定ファイル
+      - ./docker/mysql/config:/etc/mysql/conf.d
+      # DBの永続化
+      - mysql_db:/var/lib/mysql
+  spring:
+    container_name: docker-template-spring
+    build: .
+    depends_on:
+      - mysql
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    environment:
+      spring.datasource.url: "jdbc:mysql://mysql:3306/docker_template"
+
+# DBの永続化先
+volumes:
+  mysql_db:
+    driver: local
