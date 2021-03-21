@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class DockerTemplateApplication
 
 fun main(args: Array<String>) {
-	runApplication<DockerTemplateApplication>(*args)
+  runApplication<DockerTemplateApplication>(*args)
 }
